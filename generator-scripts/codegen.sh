@@ -50,7 +50,7 @@ pushd $script_base_dir/../
 rm -rf go.mod || die "failed to remove existing go.mod"
 
 # initializing the module with 'github.com/delphix/dct-sdk-go'
-go mod init github.com/delphix/dct-sdk-go && go mod tidy \
+go mod init github.com/Uddipaan-Hazarika/demo-go-sdk && go mod tidy \
     || die "module initialization failed"
 
 popd
