@@ -150,8 +150,20 @@ func (a *DSourcesApiService) GetDsourceByIdExecute(r ApiGetDsourceByIdRequest) (
 type ApiGetDsourcesRequest struct {
 	ctx context.Context
 	ApiService *DSourcesApiService
+	limit *int32
+	cursor *string
 }
 
+// Maximum number of objects to return per query. The value must be between 1 and 1000. Default is 100.
+func (r ApiGetDsourcesRequest) Limit(limit int32) ApiGetDsourcesRequest {
+	r.limit = &limit
+	return r
+}
+// Cursor to fetch the next or previous page of results.
+func (r ApiGetDsourcesRequest) Cursor(cursor string) ApiGetDsourcesRequest {
+	r.cursor = &cursor
+	return r
+}
 
 func (r ApiGetDsourcesRequest) Execute() (*ListDSourcesResponse, *http.Response, error) {
 	return r.ApiService.GetDsourcesExecute(r)
@@ -191,6 +203,12 @@ func (a *DSourcesApiService) GetDsourcesExecute(r ApiGetDsourcesRequest) (*ListD
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.limit != nil {
+		localVarQueryParams.Add("limit", parameterToString(*r.limit, ""))
+	}
+	if r.cursor != nil {
+		localVarQueryParams.Add("cursor", parameterToString(*r.cursor, ""))
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 

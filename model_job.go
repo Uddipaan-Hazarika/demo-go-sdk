@@ -13,6 +13,7 @@ package openapi
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // Job An asynchronous task.
@@ -25,6 +26,12 @@ type Job struct {
 	Type *string `json:"type,omitempty"`
 	// Details about the failure for FAILED jobs.
 	ErrorDetails *string `json:"error_details,omitempty"`
+	// A reference to the job's target.
+	TargetId *string `json:"target_id,omitempty"`
+	// The time the job started executing.
+	StartTime *time.Time `json:"start_time,omitempty"`
+	// The time the job was last updated.
+	UpdateTime *time.Time `json:"update_time,omitempty"`
 }
 
 // NewJob instantiates a new Job object
@@ -172,6 +179,102 @@ func (o *Job) SetErrorDetails(v string) {
 	o.ErrorDetails = &v
 }
 
+// GetTargetId returns the TargetId field value if set, zero value otherwise.
+func (o *Job) GetTargetId() string {
+	if o == nil || o.TargetId == nil {
+		var ret string
+		return ret
+	}
+	return *o.TargetId
+}
+
+// GetTargetIdOk returns a tuple with the TargetId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Job) GetTargetIdOk() (*string, bool) {
+	if o == nil || o.TargetId == nil {
+		return nil, false
+	}
+	return o.TargetId, true
+}
+
+// HasTargetId returns a boolean if a field has been set.
+func (o *Job) HasTargetId() bool {
+	if o != nil && o.TargetId != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetTargetId gets a reference to the given string and assigns it to the TargetId field.
+func (o *Job) SetTargetId(v string) {
+	o.TargetId = &v
+}
+
+// GetStartTime returns the StartTime field value if set, zero value otherwise.
+func (o *Job) GetStartTime() time.Time {
+	if o == nil || o.StartTime == nil {
+		var ret time.Time
+		return ret
+	}
+	return *o.StartTime
+}
+
+// GetStartTimeOk returns a tuple with the StartTime field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Job) GetStartTimeOk() (*time.Time, bool) {
+	if o == nil || o.StartTime == nil {
+		return nil, false
+	}
+	return o.StartTime, true
+}
+
+// HasStartTime returns a boolean if a field has been set.
+func (o *Job) HasStartTime() bool {
+	if o != nil && o.StartTime != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetStartTime gets a reference to the given time.Time and assigns it to the StartTime field.
+func (o *Job) SetStartTime(v time.Time) {
+	o.StartTime = &v
+}
+
+// GetUpdateTime returns the UpdateTime field value if set, zero value otherwise.
+func (o *Job) GetUpdateTime() time.Time {
+	if o == nil || o.UpdateTime == nil {
+		var ret time.Time
+		return ret
+	}
+	return *o.UpdateTime
+}
+
+// GetUpdateTimeOk returns a tuple with the UpdateTime field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Job) GetUpdateTimeOk() (*time.Time, bool) {
+	if o == nil || o.UpdateTime == nil {
+		return nil, false
+	}
+	return o.UpdateTime, true
+}
+
+// HasUpdateTime returns a boolean if a field has been set.
+func (o *Job) HasUpdateTime() bool {
+	if o != nil && o.UpdateTime != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetUpdateTime gets a reference to the given time.Time and assigns it to the UpdateTime field.
+func (o *Job) SetUpdateTime(v time.Time) {
+	o.UpdateTime = &v
+}
+
 func (o Job) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Id != nil {
@@ -185,6 +288,15 @@ func (o Job) MarshalJSON() ([]byte, error) {
 	}
 	if o.ErrorDetails != nil {
 		toSerialize["error_details"] = o.ErrorDetails
+	}
+	if o.TargetId != nil {
+		toSerialize["target_id"] = o.TargetId
+	}
+	if o.StartTime != nil {
+		toSerialize["start_time"] = o.StartTime
+	}
+	if o.UpdateTime != nil {
+		toSerialize["update_time"] = o.UpdateTime
 	}
 	return json.Marshal(toSerialize)
 }

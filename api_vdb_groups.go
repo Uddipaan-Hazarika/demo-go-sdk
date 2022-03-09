@@ -25,60 +25,59 @@ var (
 	_ context.Context
 )
 
-// BookmarksApiService BookmarksApi service
-type BookmarksApiService service
+// VDBGroupsApiService VDBGroupsApi service
+type VDBGroupsApiService service
 
-type ApiCreateBookmarkRequest struct {
+type ApiCreateVdbGroupRequest struct {
 	ctx context.Context
-	ApiService *BookmarksApiService
-	bookmark *Bookmark
+	ApiService *VDBGroupsApiService
+	createVDBGroupRequest *CreateVDBGroupRequest
 }
 
-// The parameters to create a bookmark.
-func (r ApiCreateBookmarkRequest) Bookmark(bookmark Bookmark) ApiCreateBookmarkRequest {
-	r.bookmark = &bookmark
+func (r ApiCreateVdbGroupRequest) CreateVDBGroupRequest(createVDBGroupRequest CreateVDBGroupRequest) ApiCreateVdbGroupRequest {
+	r.createVDBGroupRequest = &createVDBGroupRequest
 	return r
 }
 
-func (r ApiCreateBookmarkRequest) Execute() (*CreateBookmarkResponse, *http.Response, error) {
-	return r.ApiService.CreateBookmarkExecute(r)
+func (r ApiCreateVdbGroupRequest) Execute() (*CreateVDBGroupResponse, *http.Response, error) {
+	return r.ApiService.CreateVdbGroupExecute(r)
 }
 
 /*
-CreateBookmark Create a bookmark at the current time.
+CreateVdbGroup Create a new VDBGroup.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiCreateBookmarkRequest
+ @return ApiCreateVdbGroupRequest
 */
-func (a *BookmarksApiService) CreateBookmark(ctx context.Context) ApiCreateBookmarkRequest {
-	return ApiCreateBookmarkRequest{
+func (a *VDBGroupsApiService) CreateVdbGroup(ctx context.Context) ApiCreateVdbGroupRequest {
+	return ApiCreateVdbGroupRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return CreateBookmarkResponse
-func (a *BookmarksApiService) CreateBookmarkExecute(r ApiCreateBookmarkRequest) (*CreateBookmarkResponse, *http.Response, error) {
+//  @return CreateVDBGroupResponse
+func (a *VDBGroupsApiService) CreateVdbGroupExecute(r ApiCreateVdbGroupRequest) (*CreateVDBGroupResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *CreateBookmarkResponse
+		localVarReturnValue  *CreateVDBGroupResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksApiService.CreateBookmark")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsApiService.CreateVdbGroup")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/bookmarks"
+	localVarPath := localBasePath + "/vdb-groups"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.bookmark == nil {
-		return localVarReturnValue, nil, reportError("bookmark is required and must be specified")
+	if r.createVDBGroupRequest == nil {
+		return localVarReturnValue, nil, reportError("createVDBGroupRequest is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -99,7 +98,7 @@ func (a *BookmarksApiService) CreateBookmarkExecute(r ApiCreateBookmarkRequest) 
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.bookmark
+	localVarPostBody = r.createVDBGroupRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -151,53 +150,56 @@ func (a *BookmarksApiService) CreateBookmarkExecute(r ApiCreateBookmarkRequest) 
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiDeleteBookmarkRequest struct {
+type ApiDeleteVdbGroupRequest struct {
 	ctx context.Context
-	ApiService *BookmarksApiService
-	bookmarkId string
+	ApiService *VDBGroupsApiService
+	vdbGroupId string
 }
 
 
-func (r ApiDeleteBookmarkRequest) Execute() (*http.Response, error) {
-	return r.ApiService.DeleteBookmarkExecute(r)
+func (r ApiDeleteVdbGroupRequest) Execute() (*http.Response, error) {
+	return r.ApiService.DeleteVdbGroupExecute(r)
 }
 
 /*
-DeleteBookmark Delete a bookmark.
+DeleteVdbGroup Delete a VDBGoup.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param bookmarkId The ID of the bookmark.
- @return ApiDeleteBookmarkRequest
+ @param vdbGroupId The ID or name of the VDBGroup.
+ @return ApiDeleteVdbGroupRequest
 */
-func (a *BookmarksApiService) DeleteBookmark(ctx context.Context, bookmarkId string) ApiDeleteBookmarkRequest {
-	return ApiDeleteBookmarkRequest{
+func (a *VDBGroupsApiService) DeleteVdbGroup(ctx context.Context, vdbGroupId string) ApiDeleteVdbGroupRequest {
+	return ApiDeleteVdbGroupRequest{
 		ApiService: a,
 		ctx: ctx,
-		bookmarkId: bookmarkId,
+		vdbGroupId: vdbGroupId,
 	}
 }
 
 // Execute executes the request
-func (a *BookmarksApiService) DeleteBookmarkExecute(r ApiDeleteBookmarkRequest) (*http.Response, error) {
+func (a *VDBGroupsApiService) DeleteVdbGroupExecute(r ApiDeleteVdbGroupRequest) (*http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksApiService.DeleteBookmark")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsApiService.DeleteVdbGroup")
 	if err != nil {
 		return nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/bookmarks/{bookmarkId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"bookmarkId"+"}", url.PathEscape(parameterToString(r.bookmarkId, "")), -1)
+	localVarPath := localBasePath + "/vdb-groups/{vdbGroupId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"vdbGroupId"+"}", url.PathEscape(parameterToString(r.vdbGroupId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if strlen(r.bookmarkId) < 1 {
-		return nil, reportError("bookmarkId must have at least 1 elements")
+	if strlen(r.vdbGroupId) < 1 {
+		return nil, reportError("vdbGroupId must have at least 1 elements")
+	}
+	if strlen(r.vdbGroupId) > 256 {
+		return nil, reportError("vdbGroupId must have less than 256 elements")
 	}
 
 	// to determine the Content-Type header
@@ -259,55 +261,58 @@ func (a *BookmarksApiService) DeleteBookmarkExecute(r ApiDeleteBookmarkRequest) 
 	return localVarHTTPResponse, nil
 }
 
-type ApiGetBookmarkByIdRequest struct {
+type ApiGetBookmarksByVdbGroupRequest struct {
 	ctx context.Context
-	ApiService *BookmarksApiService
-	bookmarkId string
+	ApiService *VDBGroupsApiService
+	vdbGroupId string
 }
 
 
-func (r ApiGetBookmarkByIdRequest) Execute() (*Bookmark, *http.Response, error) {
-	return r.ApiService.GetBookmarkByIdExecute(r)
+func (r ApiGetBookmarksByVdbGroupRequest) Execute() (*ListBookmarksByVDBGroupsResponse, *http.Response, error) {
+	return r.ApiService.GetBookmarksByVdbGroupExecute(r)
 }
 
 /*
-GetBookmarkById Get a bookmark by ID.
+GetBookmarksByVdbGroup List bookmarks compatible with this VDB Group.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param bookmarkId The ID of the bookmark.
- @return ApiGetBookmarkByIdRequest
+ @param vdbGroupId The ID or name of the VDBGroup.
+ @return ApiGetBookmarksByVdbGroupRequest
 */
-func (a *BookmarksApiService) GetBookmarkById(ctx context.Context, bookmarkId string) ApiGetBookmarkByIdRequest {
-	return ApiGetBookmarkByIdRequest{
+func (a *VDBGroupsApiService) GetBookmarksByVdbGroup(ctx context.Context, vdbGroupId string) ApiGetBookmarksByVdbGroupRequest {
+	return ApiGetBookmarksByVdbGroupRequest{
 		ApiService: a,
 		ctx: ctx,
-		bookmarkId: bookmarkId,
+		vdbGroupId: vdbGroupId,
 	}
 }
 
 // Execute executes the request
-//  @return Bookmark
-func (a *BookmarksApiService) GetBookmarkByIdExecute(r ApiGetBookmarkByIdRequest) (*Bookmark, *http.Response, error) {
+//  @return ListBookmarksByVDBGroupsResponse
+func (a *VDBGroupsApiService) GetBookmarksByVdbGroupExecute(r ApiGetBookmarksByVdbGroupRequest) (*ListBookmarksByVDBGroupsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *Bookmark
+		localVarReturnValue  *ListBookmarksByVDBGroupsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksApiService.GetBookmarkById")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsApiService.GetBookmarksByVdbGroup")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/bookmarks/{bookmarkId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"bookmarkId"+"}", url.PathEscape(parameterToString(r.bookmarkId, "")), -1)
+	localVarPath := localBasePath + "/vdb-groups/{vdbGroupId}/bookmarks"
+	localVarPath = strings.Replace(localVarPath, "{"+"vdbGroupId"+"}", url.PathEscape(parameterToString(r.vdbGroupId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if strlen(r.bookmarkId) < 1 {
-		return localVarReturnValue, nil, reportError("bookmarkId must have at least 1 elements")
+	if strlen(r.vdbGroupId) < 1 {
+		return localVarReturnValue, nil, reportError("vdbGroupId must have at least 1 elements")
+	}
+	if strlen(r.vdbGroupId) > 256 {
+		return localVarReturnValue, nil, reportError("vdbGroupId must have less than 256 elements")
 	}
 
 	// to determine the Content-Type header
@@ -378,167 +383,58 @@ func (a *BookmarksApiService) GetBookmarkByIdExecute(r ApiGetBookmarkByIdRequest
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiGetBookmarksRequest struct {
+type ApiGetVdbGroupRequest struct {
 	ctx context.Context
-	ApiService *BookmarksApiService
+	ApiService *VDBGroupsApiService
+	vdbGroupId string
 }
 
 
-func (r ApiGetBookmarksRequest) Execute() (*ListBookmarksResponse, *http.Response, error) {
-	return r.ApiService.GetBookmarksExecute(r)
+func (r ApiGetVdbGroupRequest) Execute() (*VDBGroup, *http.Response, error) {
+	return r.ApiService.GetVdbGroupExecute(r)
 }
 
 /*
-GetBookmarks List all bookmarks.
+GetVdbGroup Get a VDBGroup by name.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiGetBookmarksRequest
+ @param vdbGroupId The ID or name of the VDBGroup.
+ @return ApiGetVdbGroupRequest
 */
-func (a *BookmarksApiService) GetBookmarks(ctx context.Context) ApiGetBookmarksRequest {
-	return ApiGetBookmarksRequest{
+func (a *VDBGroupsApiService) GetVdbGroup(ctx context.Context, vdbGroupId string) ApiGetVdbGroupRequest {
+	return ApiGetVdbGroupRequest{
 		ApiService: a,
 		ctx: ctx,
+		vdbGroupId: vdbGroupId,
 	}
 }
 
 // Execute executes the request
-//  @return ListBookmarksResponse
-func (a *BookmarksApiService) GetBookmarksExecute(r ApiGetBookmarksRequest) (*ListBookmarksResponse, *http.Response, error) {
+//  @return VDBGroup
+func (a *VDBGroupsApiService) GetVdbGroupExecute(r ApiGetVdbGroupRequest) (*VDBGroup, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *ListBookmarksResponse
+		localVarReturnValue  *VDBGroup
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksApiService.GetBookmarks")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsApiService.GetVdbGroup")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/bookmarks"
+	localVarPath := localBasePath + "/vdb-groups/{vdbGroupId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"vdbGroupId"+"}", url.PathEscape(parameterToString(r.vdbGroupId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	if strlen(r.vdbGroupId) < 1 {
+		return localVarReturnValue, nil, reportError("vdbGroupId must have at least 1 elements")
 	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["ApiKeyAuth"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["Authorization"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiGetVdbGroupsByBookmarkRequest struct {
-	ctx context.Context
-	ApiService *BookmarksApiService
-	bookmarkId string
-}
-
-
-func (r ApiGetVdbGroupsByBookmarkRequest) Execute() (*ListVDBGroupsByBookmarkResponse, *http.Response, error) {
-	return r.ApiService.GetVdbGroupsByBookmarkExecute(r)
-}
-
-/*
-GetVdbGroupsByBookmark List VDB Groups compatible with this bookmark.
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param bookmarkId The ID of the bookmark.
- @return ApiGetVdbGroupsByBookmarkRequest
-*/
-func (a *BookmarksApiService) GetVdbGroupsByBookmark(ctx context.Context, bookmarkId string) ApiGetVdbGroupsByBookmarkRequest {
-	return ApiGetVdbGroupsByBookmarkRequest{
-		ApiService: a,
-		ctx: ctx,
-		bookmarkId: bookmarkId,
-	}
-}
-
-// Execute executes the request
-//  @return ListVDBGroupsByBookmarkResponse
-func (a *BookmarksApiService) GetVdbGroupsByBookmarkExecute(r ApiGetVdbGroupsByBookmarkRequest) (*ListVDBGroupsByBookmarkResponse, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *ListVDBGroupsByBookmarkResponse
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksApiService.GetVdbGroupsByBookmark")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/bookmarks/{bookmarkId}/vdb-groups"
-	localVarPath = strings.Replace(localVarPath, "{"+"bookmarkId"+"}", url.PathEscape(parameterToString(r.bookmarkId, "")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if strlen(r.bookmarkId) < 1 {
-		return localVarReturnValue, nil, reportError("bookmarkId must have at least 1 elements")
+	if strlen(r.vdbGroupId) > 256 {
+		return localVarReturnValue, nil, reportError("vdbGroupId must have less than 256 elements")
 	}
 
 	// to determine the Content-Type header
@@ -609,56 +505,49 @@ func (a *BookmarksApiService) GetVdbGroupsByBookmarkExecute(r ApiGetVdbGroupsByB
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiRestoreBookmarkRequest struct {
+type ApiGetVdbGroupsRequest struct {
 	ctx context.Context
-	ApiService *BookmarksApiService
-	bookmarkId string
+	ApiService *VDBGroupsApiService
 }
 
 
-func (r ApiRestoreBookmarkRequest) Execute() (*RestoreBookmarkResponse, *http.Response, error) {
-	return r.ApiService.RestoreBookmarkExecute(r)
+func (r ApiGetVdbGroupsRequest) Execute() (*ListVDBGroupsResponse, *http.Response, error) {
+	return r.ApiService.GetVdbGroupsExecute(r)
 }
 
 /*
-RestoreBookmark Restore VDBs to the bookmark creation time.
+GetVdbGroups List all VDBGroups.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param bookmarkId The ID of the bookmark.
- @return ApiRestoreBookmarkRequest
+ @return ApiGetVdbGroupsRequest
 */
-func (a *BookmarksApiService) RestoreBookmark(ctx context.Context, bookmarkId string) ApiRestoreBookmarkRequest {
-	return ApiRestoreBookmarkRequest{
+func (a *VDBGroupsApiService) GetVdbGroups(ctx context.Context) ApiGetVdbGroupsRequest {
+	return ApiGetVdbGroupsRequest{
 		ApiService: a,
 		ctx: ctx,
-		bookmarkId: bookmarkId,
 	}
 }
 
 // Execute executes the request
-//  @return RestoreBookmarkResponse
-func (a *BookmarksApiService) RestoreBookmarkExecute(r ApiRestoreBookmarkRequest) (*RestoreBookmarkResponse, *http.Response, error) {
+//  @return ListVDBGroupsResponse
+func (a *VDBGroupsApiService) GetVdbGroupsExecute(r ApiGetVdbGroupsRequest) (*ListVDBGroupsResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
+		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *RestoreBookmarkResponse
+		localVarReturnValue  *ListVDBGroupsResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksApiService.RestoreBookmark")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VDBGroupsApiService.GetVdbGroups")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/bookmarks/{bookmarkId}/restore"
-	localVarPath = strings.Replace(localVarPath, "{"+"bookmarkId"+"}", url.PathEscape(parameterToString(r.bookmarkId, "")), -1)
+	localVarPath := localBasePath + "/vdb-groups"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if strlen(r.bookmarkId) < 1 {
-		return localVarReturnValue, nil, reportError("bookmarkId must have at least 1 elements")
-	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
