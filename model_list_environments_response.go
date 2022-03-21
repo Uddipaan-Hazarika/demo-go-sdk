@@ -20,7 +20,6 @@ type ListEnvironmentsResponse struct {
 	Items []Environment `json:"items,omitempty"`
 	// Sadly, sometimes requests to the API are not successful. Failures can occur for a wide range of reasons. The Errors object contains information about full or partial failures which might have occurred during the request.
 	Errors []Error `json:"errors,omitempty"`
-	ResponseMetadata *PaginatedResponseMetadata `json:"response_metadata,omitempty"`
 }
 
 // NewListEnvironmentsResponse instantiates a new ListEnvironmentsResponse object
@@ -104,38 +103,6 @@ func (o *ListEnvironmentsResponse) SetErrors(v []Error) {
 	o.Errors = v
 }
 
-// GetResponseMetadata returns the ResponseMetadata field value if set, zero value otherwise.
-func (o *ListEnvironmentsResponse) GetResponseMetadata() PaginatedResponseMetadata {
-	if o == nil || o.ResponseMetadata == nil {
-		var ret PaginatedResponseMetadata
-		return ret
-	}
-	return *o.ResponseMetadata
-}
-
-// GetResponseMetadataOk returns a tuple with the ResponseMetadata field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ListEnvironmentsResponse) GetResponseMetadataOk() (*PaginatedResponseMetadata, bool) {
-	if o == nil || o.ResponseMetadata == nil {
-		return nil, false
-	}
-	return o.ResponseMetadata, true
-}
-
-// HasResponseMetadata returns a boolean if a field has been set.
-func (o *ListEnvironmentsResponse) HasResponseMetadata() bool {
-	if o != nil && o.ResponseMetadata != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetResponseMetadata gets a reference to the given PaginatedResponseMetadata and assigns it to the ResponseMetadata field.
-func (o *ListEnvironmentsResponse) SetResponseMetadata(v PaginatedResponseMetadata) {
-	o.ResponseMetadata = &v
-}
-
 func (o ListEnvironmentsResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Items != nil {
@@ -143,9 +110,6 @@ func (o ListEnvironmentsResponse) MarshalJSON() ([]byte, error) {
 	}
 	if o.Errors != nil {
 		toSerialize["errors"] = o.Errors
-	}
-	if o.ResponseMetadata != nil {
-		toSerialize["response_metadata"] = o.ResponseMetadata
 	}
 	return json.Marshal(toSerialize)
 }

@@ -38,9 +38,9 @@ func main() {
 
 	client := openapi.NewAPIClient(cfg)
 
-	req := client.EnginesApi.GetEngines(ctx)
+	req := client.ManagementApi.GetRegisteredEngines(ctx)
 
-	res, _, err := client.EnginesApi.GetEnginesExecute(req)
+	res, _, err := client.ManagementApi.GetRegisteredEnginesExecute(req)
 
 	if err != nil {
 		fmt.Print("\n__________ERR__________\n")
@@ -49,7 +49,7 @@ func main() {
 	}
 	fmt.Printf("List of engines are: \n")
 
-	for _, j := range res.Items {
-		fmt.Printf("%s \n", *j.Hostname)
+	for _, j := range res {
+		fmt.Printf("%s \n", j.GetHostname())
 	}
 }
