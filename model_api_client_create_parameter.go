@@ -23,9 +23,6 @@ type ApiClientCreateParameter struct {
 	GenerateApiKey *bool `json:"generate_api_key,omitempty"`
 	// The unique ID which is used to identity the identity of an API request. The web server (nginx) configuration must be configured so as to include the external ID as the value of the X_CLIENT_ID HTTP request header when requests are proxied. If this value isn't set, the application will automatically generate one. For OAuth2/JWT based authentication, this typically corresponds to a value extracted from the JWT, uniquely identifying the API client.
 	ApiClientId *string `json:"api_client_id,omitempty"`
-	IsAdmin *bool `json:"is_admin,omitempty"`
-	// Mapping of engine ID to the engine User ID.
-	EngineUsersMapping []EngineUserMapping `json:"engine_users_mapping,omitempty"`
 }
 
 // NewApiClientCreateParameter instantiates a new ApiClientCreateParameter object
@@ -36,8 +33,6 @@ func NewApiClientCreateParameter() *ApiClientCreateParameter {
 	this := ApiClientCreateParameter{}
 	var generateApiKey bool = true
 	this.GenerateApiKey = &generateApiKey
-	var isAdmin bool = false
-	this.IsAdmin = &isAdmin
 	return &this
 }
 
@@ -48,8 +43,6 @@ func NewApiClientCreateParameterWithDefaults() *ApiClientCreateParameter {
 	this := ApiClientCreateParameter{}
 	var generateApiKey bool = true
 	this.GenerateApiKey = &generateApiKey
-	var isAdmin bool = false
-	this.IsAdmin = &isAdmin
 	return &this
 }
 
@@ -149,70 +142,6 @@ func (o *ApiClientCreateParameter) SetApiClientId(v string) {
 	o.ApiClientId = &v
 }
 
-// GetIsAdmin returns the IsAdmin field value if set, zero value otherwise.
-func (o *ApiClientCreateParameter) GetIsAdmin() bool {
-	if o == nil || o.IsAdmin == nil {
-		var ret bool
-		return ret
-	}
-	return *o.IsAdmin
-}
-
-// GetIsAdminOk returns a tuple with the IsAdmin field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ApiClientCreateParameter) GetIsAdminOk() (*bool, bool) {
-	if o == nil || o.IsAdmin == nil {
-		return nil, false
-	}
-	return o.IsAdmin, true
-}
-
-// HasIsAdmin returns a boolean if a field has been set.
-func (o *ApiClientCreateParameter) HasIsAdmin() bool {
-	if o != nil && o.IsAdmin != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetIsAdmin gets a reference to the given bool and assigns it to the IsAdmin field.
-func (o *ApiClientCreateParameter) SetIsAdmin(v bool) {
-	o.IsAdmin = &v
-}
-
-// GetEngineUsersMapping returns the EngineUsersMapping field value if set, zero value otherwise.
-func (o *ApiClientCreateParameter) GetEngineUsersMapping() []EngineUserMapping {
-	if o == nil || o.EngineUsersMapping == nil {
-		var ret []EngineUserMapping
-		return ret
-	}
-	return o.EngineUsersMapping
-}
-
-// GetEngineUsersMappingOk returns a tuple with the EngineUsersMapping field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ApiClientCreateParameter) GetEngineUsersMappingOk() ([]EngineUserMapping, bool) {
-	if o == nil || o.EngineUsersMapping == nil {
-		return nil, false
-	}
-	return o.EngineUsersMapping, true
-}
-
-// HasEngineUsersMapping returns a boolean if a field has been set.
-func (o *ApiClientCreateParameter) HasEngineUsersMapping() bool {
-	if o != nil && o.EngineUsersMapping != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetEngineUsersMapping gets a reference to the given []EngineUserMapping and assigns it to the EngineUsersMapping field.
-func (o *ApiClientCreateParameter) SetEngineUsersMapping(v []EngineUserMapping) {
-	o.EngineUsersMapping = v
-}
-
 func (o ApiClientCreateParameter) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Name != nil {
@@ -223,12 +152,6 @@ func (o ApiClientCreateParameter) MarshalJSON() ([]byte, error) {
 	}
 	if o.ApiClientId != nil {
 		toSerialize["api_client_id"] = o.ApiClientId
-	}
-	if o.IsAdmin != nil {
-		toSerialize["is_admin"] = o.IsAdmin
-	}
-	if o.EngineUsersMapping != nil {
-		toSerialize["engine_users_mapping"] = o.EngineUsersMapping
 	}
 	return json.Marshal(toSerialize)
 }

@@ -28,132 +28,6 @@ var (
 // ManagementApiService ManagementApi service
 type ManagementApiService service
 
-type ApiAddRegisteredEngineUserRequest struct {
-	ctx context.Context
-	ApiService *ManagementApiService
-	engineId int64
-	registeredEngineUser *RegisteredEngineUser
-}
-
-func (r ApiAddRegisteredEngineUserRequest) RegisteredEngineUser(registeredEngineUser RegisteredEngineUser) ApiAddRegisteredEngineUserRequest {
-	r.registeredEngineUser = &registeredEngineUser
-	return r
-}
-
-func (r ApiAddRegisteredEngineUserRequest) Execute() (*RegisteredEngineUser, *http.Response, error) {
-	return r.ApiService.AddRegisteredEngineUserExecute(r)
-}
-
-/*
-AddRegisteredEngineUser Associate a new engine user to a registered engine.
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param engineId Numeric ID of the registered engine.
- @return ApiAddRegisteredEngineUserRequest
-*/
-func (a *ManagementApiService) AddRegisteredEngineUser(ctx context.Context, engineId int64) ApiAddRegisteredEngineUserRequest {
-	return ApiAddRegisteredEngineUserRequest{
-		ApiService: a,
-		ctx: ctx,
-		engineId: engineId,
-	}
-}
-
-// Execute executes the request
-//  @return RegisteredEngineUser
-func (a *ManagementApiService) AddRegisteredEngineUserExecute(r ApiAddRegisteredEngineUserRequest) (*RegisteredEngineUser, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *RegisteredEngineUser
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.AddRegisteredEngineUser")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/management/engines/{engineId}/users"
-	localVarPath = strings.Replace(localVarPath, "{"+"engineId"+"}", url.PathEscape(parameterToString(r.engineId, "")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.engineId < 1 {
-		return localVarReturnValue, nil, reportError("engineId must be greater than 1")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	// body params
-	localVarPostBody = r.registeredEngineUser
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["ApiKeyAuth"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["Authorization"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
 type ApiCreateHashicorpVaultRequest struct {
 	ctx context.Context
 	ApiService *ManagementApiService
@@ -321,118 +195,6 @@ func (a *ManagementApiService) DeleteHashicorpVaultExecute(r ApiDeleteHashicorpV
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["ApiKeyAuth"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["Authorization"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarHTTPResponse, newErr
-	}
-
-	return localVarHTTPResponse, nil
-}
-
-type ApiDeleteRegisteredEngineUserRequest struct {
-	ctx context.Context
-	ApiService *ManagementApiService
-	engineId int64
-	userId int64
-}
-
-
-func (r ApiDeleteRegisteredEngineUserRequest) Execute() (*http.Response, error) {
-	return r.ApiService.DeleteRegisteredEngineUserExecute(r)
-}
-
-/*
-DeleteRegisteredEngineUser Remove a user from the list of users associated to a registered engine.
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param engineId Numeric ID of the registered engine.
- @param userId The ID of the registered engine user.
- @return ApiDeleteRegisteredEngineUserRequest
-*/
-func (a *ManagementApiService) DeleteRegisteredEngineUser(ctx context.Context, engineId int64, userId int64) ApiDeleteRegisteredEngineUserRequest {
-	return ApiDeleteRegisteredEngineUserRequest{
-		ApiService: a,
-		ctx: ctx,
-		engineId: engineId,
-		userId: userId,
-	}
-}
-
-// Execute executes the request
-func (a *ManagementApiService) DeleteRegisteredEngineUserExecute(r ApiDeleteRegisteredEngineUserRequest) (*http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.DeleteRegisteredEngineUser")
-	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/management/engines/{engineId}/users/{userId}"
-	localVarPath = strings.Replace(localVarPath, "{"+"engineId"+"}", url.PathEscape(parameterToString(r.engineId, "")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"userId"+"}", url.PathEscape(parameterToString(r.userId, "")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.engineId < 1 {
-		return nil, reportError("engineId must be greater than 1")
-	}
 
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -840,125 +602,6 @@ func (a *ManagementApiService) GetRegisteredEngineExecute(r ApiGetRegisteredEngi
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiGetRegisteredEngineUsersRequest struct {
-	ctx context.Context
-	ApiService *ManagementApiService
-	engineId int64
-}
-
-
-func (r ApiGetRegisteredEngineUsersRequest) Execute() ([]RegisteredEngineUser, *http.Response, error) {
-	return r.ApiService.GetRegisteredEngineUsersExecute(r)
-}
-
-/*
-GetRegisteredEngineUsers Returns the list of users associated to an registered engine.
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param engineId Numeric ID of the registered engine.
- @return ApiGetRegisteredEngineUsersRequest
-*/
-func (a *ManagementApiService) GetRegisteredEngineUsers(ctx context.Context, engineId int64) ApiGetRegisteredEngineUsersRequest {
-	return ApiGetRegisteredEngineUsersRequest{
-		ApiService: a,
-		ctx: ctx,
-		engineId: engineId,
-	}
-}
-
-// Execute executes the request
-//  @return []RegisteredEngineUser
-func (a *ManagementApiService) GetRegisteredEngineUsersExecute(r ApiGetRegisteredEngineUsersRequest) ([]RegisteredEngineUser, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  []RegisteredEngineUser
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.GetRegisteredEngineUsers")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/management/engines/{engineId}/users"
-	localVarPath = strings.Replace(localVarPath, "{"+"engineId"+"}", url.PathEscape(parameterToString(r.engineId, "")), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.engineId < 1 {
-		return localVarReturnValue, nil, reportError("engineId must be greater than 1")
-	}
-
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["ApiKeyAuth"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["Authorization"] = key
-			}
-		}
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
 type ApiGetRegisteredEnginesRequest struct {
 	ctx context.Context
 	ApiService *ManagementApiService
@@ -1201,7 +844,7 @@ type ApiUnregisterEngineRequest struct {
 }
 
 
-func (r ApiUnregisterEngineRequest) Execute() (*http.Response, error) {
+func (r ApiUnregisterEngineRequest) Execute() (*DeleteEngineResponse, *http.Response, error) {
 	return r.ApiService.UnregisterEngineExecute(r)
 }
 
@@ -1221,16 +864,18 @@ func (a *ManagementApiService) UnregisterEngine(ctx context.Context, engineId in
 }
 
 // Execute executes the request
-func (a *ManagementApiService) UnregisterEngineExecute(r ApiUnregisterEngineRequest) (*http.Response, error) {
+//  @return DeleteEngineResponse
+func (a *ManagementApiService) UnregisterEngineExecute(r ApiUnregisterEngineRequest) (*DeleteEngineResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *DeleteEngineResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ManagementApiService.UnregisterEngine")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/management/engines/{engineId}"
@@ -1240,7 +885,7 @@ func (a *ManagementApiService) UnregisterEngineExecute(r ApiUnregisterEngineRequ
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 	if r.engineId < 1 {
-		return nil, reportError("engineId must be greater than 1")
+		return localVarReturnValue, nil, reportError("engineId must be greater than 1")
 	}
 
 	// to determine the Content-Type header
@@ -1253,7 +898,7 @@ func (a *ManagementApiService) UnregisterEngineExecute(r ApiUnregisterEngineRequ
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1276,19 +921,19 @@ func (a *ManagementApiService) UnregisterEngineExecute(r ApiUnregisterEngineRequ
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1296,10 +941,19 @@ func (a *ManagementApiService) UnregisterEngineExecute(r ApiUnregisterEngineRequ
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiUpdateRegisteredEngineRequest struct {

@@ -22,18 +22,14 @@ type ApiClient struct {
 	// The unique ID which is used to identity the identity of an API request. The web server (nginx) configuration must be configured so as to include the external ID as the value of the X_CLIENT_ID HTTP request header when requests are proxied. For OAuth2/JWT based authentication, this typically corresponds to a value extracted from the JWT, uniquely identifying the API client.
 	ApiClientId *string `json:"api_client_id,omitempty"`
 	Name *string `json:"name,omitempty"`
-	IsAdmin bool `json:"is_admin"`
-	// Mapping of engine ID to the engine User ID.
-	EngineUsersMapping []EngineUserMapping `json:"engine_users_mapping,omitempty"`
 }
 
 // NewApiClient instantiates a new ApiClient object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewApiClient(isAdmin bool) *ApiClient {
+func NewApiClient() *ApiClient {
 	this := ApiClient{}
-	this.IsAdmin = isAdmin
 	return &this
 }
 
@@ -141,62 +137,6 @@ func (o *ApiClient) SetName(v string) {
 	o.Name = &v
 }
 
-// GetIsAdmin returns the IsAdmin field value
-func (o *ApiClient) GetIsAdmin() bool {
-	if o == nil {
-		var ret bool
-		return ret
-	}
-
-	return o.IsAdmin
-}
-
-// GetIsAdminOk returns a tuple with the IsAdmin field value
-// and a boolean to check if the value has been set.
-func (o *ApiClient) GetIsAdminOk() (*bool, bool) {
-	if o == nil  {
-		return nil, false
-	}
-	return &o.IsAdmin, true
-}
-
-// SetIsAdmin sets field value
-func (o *ApiClient) SetIsAdmin(v bool) {
-	o.IsAdmin = v
-}
-
-// GetEngineUsersMapping returns the EngineUsersMapping field value if set, zero value otherwise.
-func (o *ApiClient) GetEngineUsersMapping() []EngineUserMapping {
-	if o == nil || o.EngineUsersMapping == nil {
-		var ret []EngineUserMapping
-		return ret
-	}
-	return o.EngineUsersMapping
-}
-
-// GetEngineUsersMappingOk returns a tuple with the EngineUsersMapping field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ApiClient) GetEngineUsersMappingOk() ([]EngineUserMapping, bool) {
-	if o == nil || o.EngineUsersMapping == nil {
-		return nil, false
-	}
-	return o.EngineUsersMapping, true
-}
-
-// HasEngineUsersMapping returns a boolean if a field has been set.
-func (o *ApiClient) HasEngineUsersMapping() bool {
-	if o != nil && o.EngineUsersMapping != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetEngineUsersMapping gets a reference to the given []EngineUserMapping and assigns it to the EngineUsersMapping field.
-func (o *ApiClient) SetEngineUsersMapping(v []EngineUserMapping) {
-	o.EngineUsersMapping = v
-}
-
 func (o ApiClient) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Id != nil {
@@ -207,12 +147,6 @@ func (o ApiClient) MarshalJSON() ([]byte, error) {
 	}
 	if o.Name != nil {
 		toSerialize["name"] = o.Name
-	}
-	if true {
-		toSerialize["is_admin"] = o.IsAdmin
-	}
-	if o.EngineUsersMapping != nil {
-		toSerialize["engine_users_mapping"] = o.EngineUsersMapping
 	}
 	return json.Marshal(toSerialize)
 }

@@ -18,7 +18,7 @@ import (
 // TagsResponse struct for TagsResponse
 type TagsResponse struct {
 	// Array of tags with key value pairs
-	Tags []Tags `json:"tags,omitempty"`
+	Tags []Tag `json:"tags,omitempty"`
 }
 
 // NewTagsResponse instantiates a new TagsResponse object
@@ -39,9 +39,9 @@ func NewTagsResponseWithDefaults() *TagsResponse {
 }
 
 // GetTags returns the Tags field value if set, zero value otherwise.
-func (o *TagsResponse) GetTags() []Tags {
+func (o *TagsResponse) GetTags() []Tag {
 	if o == nil || o.Tags == nil {
-		var ret []Tags
+		var ret []Tag
 		return ret
 	}
 	return o.Tags
@@ -49,7 +49,7 @@ func (o *TagsResponse) GetTags() []Tags {
 
 // GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TagsResponse) GetTagsOk() ([]Tags, bool) {
+func (o *TagsResponse) GetTagsOk() ([]Tag, bool) {
 	if o == nil || o.Tags == nil {
 		return nil, false
 	}
@@ -65,8 +65,8 @@ func (o *TagsResponse) HasTags() bool {
 	return false
 }
 
-// SetTags gets a reference to the given []Tags and assigns it to the Tags field.
-func (o *TagsResponse) SetTags(v []Tags) {
+// SetTags gets a reference to the given []Tag and assigns it to the Tags field.
+func (o *TagsResponse) SetTags(v []Tag) {
 	o.Tags = v
 }
 

@@ -490,26 +490,26 @@ func (a *BookmarksApiService) GetBookmarksExecute(r ApiGetBookmarksRequest) (*Li
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
-type ApiRestoreBookmarkRequest struct {
+type ApiGetVdbGroupsByBookmarkRequest struct {
 	ctx context.Context
 	ApiService *BookmarksApiService
 	bookmarkId string
 }
 
 
-func (r ApiRestoreBookmarkRequest) Execute() (*RestoreBookmarkResponse, *http.Response, error) {
-	return r.ApiService.RestoreBookmarkExecute(r)
+func (r ApiGetVdbGroupsByBookmarkRequest) Execute() (*ListVDBGroupsByBookmarkResponse, *http.Response, error) {
+	return r.ApiService.GetVdbGroupsByBookmarkExecute(r)
 }
 
 /*
-RestoreBookmark Restore VDBs to the bookmark creation time.
+GetVdbGroupsByBookmark List VDB Groups compatible with this bookmark.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param bookmarkId The ID of the bookmark.
- @return ApiRestoreBookmarkRequest
+ @return ApiGetVdbGroupsByBookmarkRequest
 */
-func (a *BookmarksApiService) RestoreBookmark(ctx context.Context, bookmarkId string) ApiRestoreBookmarkRequest {
-	return ApiRestoreBookmarkRequest{
+func (a *BookmarksApiService) GetVdbGroupsByBookmark(ctx context.Context, bookmarkId string) ApiGetVdbGroupsByBookmarkRequest {
+	return ApiGetVdbGroupsByBookmarkRequest{
 		ApiService: a,
 		ctx: ctx,
 		bookmarkId: bookmarkId,
@@ -517,21 +517,21 @@ func (a *BookmarksApiService) RestoreBookmark(ctx context.Context, bookmarkId st
 }
 
 // Execute executes the request
-//  @return RestoreBookmarkResponse
-func (a *BookmarksApiService) RestoreBookmarkExecute(r ApiRestoreBookmarkRequest) (*RestoreBookmarkResponse, *http.Response, error) {
+//  @return ListVDBGroupsByBookmarkResponse
+func (a *BookmarksApiService) GetVdbGroupsByBookmarkExecute(r ApiGetVdbGroupsByBookmarkRequest) (*ListVDBGroupsByBookmarkResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
+		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *RestoreBookmarkResponse
+		localVarReturnValue  *ListVDBGroupsByBookmarkResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksApiService.RestoreBookmark")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "BookmarksApiService.GetVdbGroupsByBookmark")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/bookmarks/{bookmarkId}/restore"
+	localVarPath := localBasePath + "/bookmarks/{bookmarkId}/vdb-groups"
 	localVarPath = strings.Replace(localVarPath, "{"+"bookmarkId"+"}", url.PathEscape(parameterToString(r.bookmarkId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)

@@ -43,10 +43,10 @@ type EnvironmentCreateParameters struct {
 	Username *string `json:"username,omitempty"`
 	// Password of the OS.
 	Password *string `json:"password,omitempty"`
-	// Name or Reference of the vault configured in engine.
+	// The name or reference of the vault from which to read the host credentials.
 	Vault *string `json:"vault,omitempty"`
 	// Vault engine name where the credential is stored.
-	HashicorpVaultEngineName *string `json:"hashicorp_vault_engine_name,omitempty"`
+	HashicorpVaultEngine *string `json:"hashicorp_vault_engine,omitempty"`
 	// Path in the vault engine where the credential is stored.
 	HashicorpVaultSecretPath *string `json:"hashicorp_vault_secret_path,omitempty"`
 	// Key for the username in the key-value store.
@@ -61,6 +61,18 @@ type EnvironmentCreateParameters struct {
 	AseDbUsername *string `json:"ase_db_username,omitempty"`
 	// password of the SAP ASE database.
 	AseDbPassword *string `json:"ase_db_password,omitempty"`
+	// The name or reference of the vault from which to read the ASE database credentials.
+	AseDbVault *string `json:"ase_db_vault,omitempty"`
+	// Vault engine name where the credential is stored.
+	AseDbHashicorpVaultEngine *string `json:"ase_db_hashicorp_vault_engine,omitempty"`
+	// Path in the vault engine where the credential is stored.
+	AseDbHashicorpVaultSecretPath *string `json:"ase_db_hashicorp_vault_secret_path,omitempty"`
+	// Key for the username in the key-value store.
+	AseDbHashicorpVaultUsernameKey *string `json:"ase_db_hashicorp_vault_username_key,omitempty"`
+	// Key for the password in the key-value store.
+	AseDbHashicorpVaultSecretKey *string `json:"ase_db_hashicorp_vault_secret_key,omitempty"`
+	// Query to find a credential in the CyberArk vault.
+	AseDbCyberarkVaultQueryString *string `json:"ase_db_cyberark_vault_query_string,omitempty"`
 	// The path to the user managed Java Development Kit (JDK). If not specified, then the OpenJDK will be used.
 	JavaHome *string `json:"java_home,omitempty"`
 	// DSP keystore path.
@@ -529,36 +541,36 @@ func (o *EnvironmentCreateParameters) SetVault(v string) {
 	o.Vault = &v
 }
 
-// GetHashicorpVaultEngineName returns the HashicorpVaultEngineName field value if set, zero value otherwise.
-func (o *EnvironmentCreateParameters) GetHashicorpVaultEngineName() string {
-	if o == nil || o.HashicorpVaultEngineName == nil {
+// GetHashicorpVaultEngine returns the HashicorpVaultEngine field value if set, zero value otherwise.
+func (o *EnvironmentCreateParameters) GetHashicorpVaultEngine() string {
+	if o == nil || o.HashicorpVaultEngine == nil {
 		var ret string
 		return ret
 	}
-	return *o.HashicorpVaultEngineName
+	return *o.HashicorpVaultEngine
 }
 
-// GetHashicorpVaultEngineNameOk returns a tuple with the HashicorpVaultEngineName field value if set, nil otherwise
+// GetHashicorpVaultEngineOk returns a tuple with the HashicorpVaultEngine field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *EnvironmentCreateParameters) GetHashicorpVaultEngineNameOk() (*string, bool) {
-	if o == nil || o.HashicorpVaultEngineName == nil {
+func (o *EnvironmentCreateParameters) GetHashicorpVaultEngineOk() (*string, bool) {
+	if o == nil || o.HashicorpVaultEngine == nil {
 		return nil, false
 	}
-	return o.HashicorpVaultEngineName, true
+	return o.HashicorpVaultEngine, true
 }
 
-// HasHashicorpVaultEngineName returns a boolean if a field has been set.
-func (o *EnvironmentCreateParameters) HasHashicorpVaultEngineName() bool {
-	if o != nil && o.HashicorpVaultEngineName != nil {
+// HasHashicorpVaultEngine returns a boolean if a field has been set.
+func (o *EnvironmentCreateParameters) HasHashicorpVaultEngine() bool {
+	if o != nil && o.HashicorpVaultEngine != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetHashicorpVaultEngineName gets a reference to the given string and assigns it to the HashicorpVaultEngineName field.
-func (o *EnvironmentCreateParameters) SetHashicorpVaultEngineName(v string) {
-	o.HashicorpVaultEngineName = &v
+// SetHashicorpVaultEngine gets a reference to the given string and assigns it to the HashicorpVaultEngine field.
+func (o *EnvironmentCreateParameters) SetHashicorpVaultEngine(v string) {
+	o.HashicorpVaultEngine = &v
 }
 
 // GetHashicorpVaultSecretPath returns the HashicorpVaultSecretPath field value if set, zero value otherwise.
@@ -783,6 +795,198 @@ func (o *EnvironmentCreateParameters) HasAseDbPassword() bool {
 // SetAseDbPassword gets a reference to the given string and assigns it to the AseDbPassword field.
 func (o *EnvironmentCreateParameters) SetAseDbPassword(v string) {
 	o.AseDbPassword = &v
+}
+
+// GetAseDbVault returns the AseDbVault field value if set, zero value otherwise.
+func (o *EnvironmentCreateParameters) GetAseDbVault() string {
+	if o == nil || o.AseDbVault == nil {
+		var ret string
+		return ret
+	}
+	return *o.AseDbVault
+}
+
+// GetAseDbVaultOk returns a tuple with the AseDbVault field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentCreateParameters) GetAseDbVaultOk() (*string, bool) {
+	if o == nil || o.AseDbVault == nil {
+		return nil, false
+	}
+	return o.AseDbVault, true
+}
+
+// HasAseDbVault returns a boolean if a field has been set.
+func (o *EnvironmentCreateParameters) HasAseDbVault() bool {
+	if o != nil && o.AseDbVault != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAseDbVault gets a reference to the given string and assigns it to the AseDbVault field.
+func (o *EnvironmentCreateParameters) SetAseDbVault(v string) {
+	o.AseDbVault = &v
+}
+
+// GetAseDbHashicorpVaultEngine returns the AseDbHashicorpVaultEngine field value if set, zero value otherwise.
+func (o *EnvironmentCreateParameters) GetAseDbHashicorpVaultEngine() string {
+	if o == nil || o.AseDbHashicorpVaultEngine == nil {
+		var ret string
+		return ret
+	}
+	return *o.AseDbHashicorpVaultEngine
+}
+
+// GetAseDbHashicorpVaultEngineOk returns a tuple with the AseDbHashicorpVaultEngine field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentCreateParameters) GetAseDbHashicorpVaultEngineOk() (*string, bool) {
+	if o == nil || o.AseDbHashicorpVaultEngine == nil {
+		return nil, false
+	}
+	return o.AseDbHashicorpVaultEngine, true
+}
+
+// HasAseDbHashicorpVaultEngine returns a boolean if a field has been set.
+func (o *EnvironmentCreateParameters) HasAseDbHashicorpVaultEngine() bool {
+	if o != nil && o.AseDbHashicorpVaultEngine != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAseDbHashicorpVaultEngine gets a reference to the given string and assigns it to the AseDbHashicorpVaultEngine field.
+func (o *EnvironmentCreateParameters) SetAseDbHashicorpVaultEngine(v string) {
+	o.AseDbHashicorpVaultEngine = &v
+}
+
+// GetAseDbHashicorpVaultSecretPath returns the AseDbHashicorpVaultSecretPath field value if set, zero value otherwise.
+func (o *EnvironmentCreateParameters) GetAseDbHashicorpVaultSecretPath() string {
+	if o == nil || o.AseDbHashicorpVaultSecretPath == nil {
+		var ret string
+		return ret
+	}
+	return *o.AseDbHashicorpVaultSecretPath
+}
+
+// GetAseDbHashicorpVaultSecretPathOk returns a tuple with the AseDbHashicorpVaultSecretPath field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentCreateParameters) GetAseDbHashicorpVaultSecretPathOk() (*string, bool) {
+	if o == nil || o.AseDbHashicorpVaultSecretPath == nil {
+		return nil, false
+	}
+	return o.AseDbHashicorpVaultSecretPath, true
+}
+
+// HasAseDbHashicorpVaultSecretPath returns a boolean if a field has been set.
+func (o *EnvironmentCreateParameters) HasAseDbHashicorpVaultSecretPath() bool {
+	if o != nil && o.AseDbHashicorpVaultSecretPath != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAseDbHashicorpVaultSecretPath gets a reference to the given string and assigns it to the AseDbHashicorpVaultSecretPath field.
+func (o *EnvironmentCreateParameters) SetAseDbHashicorpVaultSecretPath(v string) {
+	o.AseDbHashicorpVaultSecretPath = &v
+}
+
+// GetAseDbHashicorpVaultUsernameKey returns the AseDbHashicorpVaultUsernameKey field value if set, zero value otherwise.
+func (o *EnvironmentCreateParameters) GetAseDbHashicorpVaultUsernameKey() string {
+	if o == nil || o.AseDbHashicorpVaultUsernameKey == nil {
+		var ret string
+		return ret
+	}
+	return *o.AseDbHashicorpVaultUsernameKey
+}
+
+// GetAseDbHashicorpVaultUsernameKeyOk returns a tuple with the AseDbHashicorpVaultUsernameKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentCreateParameters) GetAseDbHashicorpVaultUsernameKeyOk() (*string, bool) {
+	if o == nil || o.AseDbHashicorpVaultUsernameKey == nil {
+		return nil, false
+	}
+	return o.AseDbHashicorpVaultUsernameKey, true
+}
+
+// HasAseDbHashicorpVaultUsernameKey returns a boolean if a field has been set.
+func (o *EnvironmentCreateParameters) HasAseDbHashicorpVaultUsernameKey() bool {
+	if o != nil && o.AseDbHashicorpVaultUsernameKey != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAseDbHashicorpVaultUsernameKey gets a reference to the given string and assigns it to the AseDbHashicorpVaultUsernameKey field.
+func (o *EnvironmentCreateParameters) SetAseDbHashicorpVaultUsernameKey(v string) {
+	o.AseDbHashicorpVaultUsernameKey = &v
+}
+
+// GetAseDbHashicorpVaultSecretKey returns the AseDbHashicorpVaultSecretKey field value if set, zero value otherwise.
+func (o *EnvironmentCreateParameters) GetAseDbHashicorpVaultSecretKey() string {
+	if o == nil || o.AseDbHashicorpVaultSecretKey == nil {
+		var ret string
+		return ret
+	}
+	return *o.AseDbHashicorpVaultSecretKey
+}
+
+// GetAseDbHashicorpVaultSecretKeyOk returns a tuple with the AseDbHashicorpVaultSecretKey field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentCreateParameters) GetAseDbHashicorpVaultSecretKeyOk() (*string, bool) {
+	if o == nil || o.AseDbHashicorpVaultSecretKey == nil {
+		return nil, false
+	}
+	return o.AseDbHashicorpVaultSecretKey, true
+}
+
+// HasAseDbHashicorpVaultSecretKey returns a boolean if a field has been set.
+func (o *EnvironmentCreateParameters) HasAseDbHashicorpVaultSecretKey() bool {
+	if o != nil && o.AseDbHashicorpVaultSecretKey != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAseDbHashicorpVaultSecretKey gets a reference to the given string and assigns it to the AseDbHashicorpVaultSecretKey field.
+func (o *EnvironmentCreateParameters) SetAseDbHashicorpVaultSecretKey(v string) {
+	o.AseDbHashicorpVaultSecretKey = &v
+}
+
+// GetAseDbCyberarkVaultQueryString returns the AseDbCyberarkVaultQueryString field value if set, zero value otherwise.
+func (o *EnvironmentCreateParameters) GetAseDbCyberarkVaultQueryString() string {
+	if o == nil || o.AseDbCyberarkVaultQueryString == nil {
+		var ret string
+		return ret
+	}
+	return *o.AseDbCyberarkVaultQueryString
+}
+
+// GetAseDbCyberarkVaultQueryStringOk returns a tuple with the AseDbCyberarkVaultQueryString field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EnvironmentCreateParameters) GetAseDbCyberarkVaultQueryStringOk() (*string, bool) {
+	if o == nil || o.AseDbCyberarkVaultQueryString == nil {
+		return nil, false
+	}
+	return o.AseDbCyberarkVaultQueryString, true
+}
+
+// HasAseDbCyberarkVaultQueryString returns a boolean if a field has been set.
+func (o *EnvironmentCreateParameters) HasAseDbCyberarkVaultQueryString() bool {
+	if o != nil && o.AseDbCyberarkVaultQueryString != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAseDbCyberarkVaultQueryString gets a reference to the given string and assigns it to the AseDbCyberarkVaultQueryString field.
+func (o *EnvironmentCreateParameters) SetAseDbCyberarkVaultQueryString(v string) {
+	o.AseDbCyberarkVaultQueryString = &v
 }
 
 // GetJavaHome returns the JavaHome field value if set, zero value otherwise.
@@ -1053,8 +1257,8 @@ func (o EnvironmentCreateParameters) MarshalJSON() ([]byte, error) {
 	if o.Vault != nil {
 		toSerialize["vault"] = o.Vault
 	}
-	if o.HashicorpVaultEngineName != nil {
-		toSerialize["hashicorp_vault_engine_name"] = o.HashicorpVaultEngineName
+	if o.HashicorpVaultEngine != nil {
+		toSerialize["hashicorp_vault_engine"] = o.HashicorpVaultEngine
 	}
 	if o.HashicorpVaultSecretPath != nil {
 		toSerialize["hashicorp_vault_secret_path"] = o.HashicorpVaultSecretPath
@@ -1076,6 +1280,24 @@ func (o EnvironmentCreateParameters) MarshalJSON() ([]byte, error) {
 	}
 	if o.AseDbPassword != nil {
 		toSerialize["ase_db_password"] = o.AseDbPassword
+	}
+	if o.AseDbVault != nil {
+		toSerialize["ase_db_vault"] = o.AseDbVault
+	}
+	if o.AseDbHashicorpVaultEngine != nil {
+		toSerialize["ase_db_hashicorp_vault_engine"] = o.AseDbHashicorpVaultEngine
+	}
+	if o.AseDbHashicorpVaultSecretPath != nil {
+		toSerialize["ase_db_hashicorp_vault_secret_path"] = o.AseDbHashicorpVaultSecretPath
+	}
+	if o.AseDbHashicorpVaultUsernameKey != nil {
+		toSerialize["ase_db_hashicorp_vault_username_key"] = o.AseDbHashicorpVaultUsernameKey
+	}
+	if o.AseDbHashicorpVaultSecretKey != nil {
+		toSerialize["ase_db_hashicorp_vault_secret_key"] = o.AseDbHashicorpVaultSecretKey
+	}
+	if o.AseDbCyberarkVaultQueryString != nil {
+		toSerialize["ase_db_cyberark_vault_query_string"] = o.AseDbCyberarkVaultQueryString
 	}
 	if o.JavaHome != nil {
 		toSerialize["java_home"] = o.JavaHome

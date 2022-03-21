@@ -42,6 +42,7 @@ type VDB struct {
 	ParentId NullableString `json:"parent_id,omitempty"`
 	// The name of the group containing this VDB.
 	GroupName NullableString `json:"group_name,omitempty"`
+	Tags []Tag `json:"tags,omitempty"`
 	// The date this VDB was created.
 	CreationDate NullableTime `json:"creation_date,omitempty"`
 }
@@ -547,6 +548,38 @@ func (o *VDB) UnsetGroupName() {
 	o.GroupName.Unset()
 }
 
+// GetTags returns the Tags field value if set, zero value otherwise.
+func (o *VDB) GetTags() []Tag {
+	if o == nil || o.Tags == nil {
+		var ret []Tag
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VDB) GetTagsOk() ([]Tag, bool) {
+	if o == nil || o.Tags == nil {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *VDB) HasTags() bool {
+	if o != nil && o.Tags != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []Tag and assigns it to the Tags field.
+func (o *VDB) SetTags(v []Tag) {
+	o.Tags = v
+}
+
 // GetCreationDate returns the CreationDate field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *VDB) GetCreationDate() time.Time {
 	if o == nil || o.CreationDate.Get() == nil {
@@ -626,6 +659,9 @@ func (o VDB) MarshalJSON() ([]byte, error) {
 	}
 	if o.GroupName.IsSet() {
 		toSerialize["group_name"] = o.GroupName.Get()
+	}
+	if o.Tags != nil {
+		toSerialize["tags"] = o.Tags
 	}
 	if o.CreationDate.IsSet() {
 		toSerialize["creation_date"] = o.CreationDate.Get()

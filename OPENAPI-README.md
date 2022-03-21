@@ -88,22 +88,24 @@ Class | Method | HTTP request | Description
 *BookmarksApi* | [**DeleteBookmark**](docs/BookmarksApi.md#deletebookmark) | **Delete** /bookmarks/{bookmarkId} | Delete a bookmark.
 *BookmarksApi* | [**GetBookmarkById**](docs/BookmarksApi.md#getbookmarkbyid) | **Get** /bookmarks/{bookmarkId} | Get a bookmark by ID.
 *BookmarksApi* | [**GetBookmarks**](docs/BookmarksApi.md#getbookmarks) | **Get** /bookmarks | List all bookmarks.
-*BookmarksApi* | [**RestoreBookmark**](docs/BookmarksApi.md#restorebookmark) | **Post** /bookmarks/{bookmarkId}/restore | Restore VDBs to the bookmark creation time.
+*BookmarksApi* | [**GetVdbGroupsByBookmark**](docs/BookmarksApi.md#getvdbgroupsbybookmark) | **Get** /bookmarks/{bookmarkId}/vdb-groups | List VDB Groups compatible with this bookmark.
 *DSourcesApi* | [**GetDsourceById**](docs/DSourcesApi.md#getdsourcebyid) | **Get** /dsources/{dsourceId} | Get a dSource by ID.
 *DSourcesApi* | [**GetDsources**](docs/DSourcesApi.md#getdsources) | **Get** /dsources | List all dSources.
-*EnginesApi* | [**GetEngineById**](docs/EnginesApi.md#getenginebyid) | **Get** /engines/{engineId} | Returns an engine by ID.
-*EnginesApi* | [**GetEngines**](docs/EnginesApi.md#getengines) | **Get** /engines | List all engines.
+*EnginesApi* | [**ConnectivityCheck**](docs/EnginesApi.md#connectivitycheck) | **Post** /engines/connnectivity/check | Checks connectivity between an engine and a remote host on a given port.
+*EnvironmentsApi* | [**CreateEnvironments**](docs/EnvironmentsApi.md#createenvironments) | **Post** /environments | Create a environment.
+*EnvironmentsApi* | [**DeleteEnvironment**](docs/EnvironmentsApi.md#deleteenvironment) | **Delete** /environments/{environmentId} | Delete an environment by ID.
+*EnvironmentsApi* | [**DisableEnvironment**](docs/EnvironmentsApi.md#disableenvironment) | **Put** /environments/{environmentId}/disable | Disable environment.
+*EnvironmentsApi* | [**EnableEnvironment**](docs/EnvironmentsApi.md#enableenvironment) | **Put** /environments/{environmentId}/enable | Enable a disabled environment.
 *EnvironmentsApi* | [**GetEnvironmentById**](docs/EnvironmentsApi.md#getenvironmentbyid) | **Get** /environments/{environmentId} | Returns an environment by ID.
 *EnvironmentsApi* | [**GetEnvironments**](docs/EnvironmentsApi.md#getenvironments) | **Get** /environments | List all environments.
-*JobsApi* | [**GetJobById**](docs/JobsApi.md#getjobbyid) | **Get** /jobs/{jobId} | Returns an job by ID.
-*ManagementApi* | [**AddRegisteredEngineUser**](docs/ManagementApi.md#addregisteredengineuser) | **Post** /management/engines/{engineId}/users | Associate a new engine user to a registered engine.
+*EnvironmentsApi* | [**RefreshEnvironment**](docs/EnvironmentsApi.md#refreshenvironment) | **Put** /environments/{environmentId}/refresh | Refresh environment.
+*JobsApi* | [**AbandonJob**](docs/JobsApi.md#abandonjob) | **Post** /jobs/{jobId}/abandon | Abandons a job.
+*JobsApi* | [**GetJobById**](docs/JobsApi.md#getjobbyid) | **Get** /jobs/{jobId} | Returns a job by ID.
 *ManagementApi* | [**CreateHashicorpVault**](docs/ManagementApi.md#createhashicorpvault) | **Post** /management/vaults/hashicorp | Configure a new Hashicorp Vault
 *ManagementApi* | [**DeleteHashicorpVault**](docs/ManagementApi.md#deletehashicorpvault) | **Delete** /management/vaults/hashicorp/{vaultId} | Delete a Hashicorp vault by id
-*ManagementApi* | [**DeleteRegisteredEngineUser**](docs/ManagementApi.md#deleteregisteredengineuser) | **Delete** /management/engines/{engineId}/users/{userId} | Remove a user from the list of users associated to a registered engine.
 *ManagementApi* | [**GetHashicorpVault**](docs/ManagementApi.md#gethashicorpvault) | **Get** /management/vaults/hashicorp/{vaultId} | Get a Hashicorp vault by id
 *ManagementApi* | [**GetHashicorpVaults**](docs/ManagementApi.md#gethashicorpvaults) | **Get** /management/vaults/hashicorp | Returns a list of configured Hashicorp vaults.
 *ManagementApi* | [**GetRegisteredEngine**](docs/ManagementApi.md#getregisteredengine) | **Get** /management/engines/{engineId} | Returns a registered engine by ID.
-*ManagementApi* | [**GetRegisteredEngineUsers**](docs/ManagementApi.md#getregisteredengineusers) | **Get** /management/engines/{engineId}/users | Returns the list of users associated to an registered engine.
 *ManagementApi* | [**GetRegisteredEngines**](docs/ManagementApi.md#getregisteredengines) | **Get** /management/engines | Returns a list of registered engines.
 *ManagementApi* | [**RegisterEngine**](docs/ManagementApi.md#registerengine) | **Post** /management/engines | Register an engine.
 *ManagementApi* | [**UnregisterEngine**](docs/ManagementApi.md#unregisterengine) | **Delete** /management/engines/{engineId} | Unregister an engine.
@@ -112,9 +114,17 @@ Class | Method | HTTP request | Description
 *SnapshotsApi* | [**GetSnapshots**](docs/SnapshotsApi.md#getsnapshots) | **Get** /snapshots | List Snapshots for a dSource or VDB.
 *SourcesApi* | [**GetSourceById**](docs/SourcesApi.md#getsourcebyid) | **Get** /sources/{sourceId} | Get a source by ID.
 *SourcesApi* | [**GetSources**](docs/SourcesApi.md#getsources) | **Get** /sources | List all sources.
+*VDBGroupsApi* | [**CreateVdbGroup**](docs/VDBGroupsApi.md#createvdbgroup) | **Post** /vdb-groups | Create a new VDBGroup.
+*VDBGroupsApi* | [**DeleteVdbGroup**](docs/VDBGroupsApi.md#deletevdbgroup) | **Delete** /vdb-groups/{vdbGroupId} | Delete a VDBGoup.
+*VDBGroupsApi* | [**GetBookmarksByVdbGroup**](docs/VDBGroupsApi.md#getbookmarksbyvdbgroup) | **Get** /vdb-groups/{vdbGroupId}/bookmarks | List bookmarks compatible with this VDB Group.
+*VDBGroupsApi* | [**GetVdbGroup**](docs/VDBGroupsApi.md#getvdbgroup) | **Get** /vdb-groups/{vdbGroupId} | Get a VDBGroup by name.
+*VDBGroupsApi* | [**GetVdbGroups**](docs/VDBGroupsApi.md#getvdbgroups) | **Get** /vdb-groups | List all VDBGroups.
+*VDBsApi* | [**CreateVdbTags**](docs/VDBsApi.md#createvdbtags) | **Post** /vdbs/{vdbId}/tags | Create tags for a VDB.
 *VDBsApi* | [**DeleteVdb**](docs/VDBsApi.md#deletevdb) | **Post** /vdbs/{vdbId}/delete | Delete a VDB.
+*VDBsApi* | [**DeleteVdbTags**](docs/VDBsApi.md#deletevdbtags) | **Post** /vdbs/{vdbId}/tags/delete | Delete tags for a VDB.
 *VDBsApi* | [**DisableVdb**](docs/VDBsApi.md#disablevdb) | **Post** /vdbs/{vdbId}/disable | Disable a VDB.
 *VDBsApi* | [**EnableVdb**](docs/VDBsApi.md#enablevdb) | **Post** /vdbs/{vdbId}/enable | Enable a VDB.
+*VDBsApi* | [**GetTagsVdb**](docs/VDBsApi.md#gettagsvdb) | **Get** /vdbs/{vdbId}/tags | Get tags for a VDB.
 *VDBsApi* | [**GetVdbById**](docs/VDBsApi.md#getvdbbyid) | **Get** /vdbs/{vdbId} | Get a VDB by ID.
 *VDBsApi* | [**GetVdbs**](docs/VDBsApi.md#getvdbs) | **Get** /vdbs | List all vdbs.
 *VDBsApi* | [**ProvisionVdbBySnapshot**](docs/VDBsApi.md#provisionvdbbysnapshot) | **Post** /vdbs/provision_by_snapshot | Provision a new VDB by snapshot.
@@ -125,6 +135,7 @@ Class | Method | HTTP request | Description
 *VDBsApi* | [**RollbackVdbByTimestamp**](docs/VDBsApi.md#rollbackvdbbytimestamp) | **Post** /vdbs/{vdbId}/rollback_by_timestamp | Rollback a VDB by timestamp.
 *VDBsApi* | [**StartVdb**](docs/VDBsApi.md#startvdb) | **Post** /vdbs/{vdbId}/start | Start a VDB.
 *VDBsApi* | [**StopVdb**](docs/VDBsApi.md#stopvdb) | **Post** /vdbs/{vdbId}/stop | Stop a VDB.
+*VDBsApi* | [**UpdateVdbById**](docs/VDBsApi.md#updatevdbbyid) | **Patch** /vdbs/{vdbId} | Update values of a VDB
 
 
 ## Documentation For Models
@@ -135,44 +146,53 @@ Class | Method | HTTP request | Description
  - [BaseProvisionVDBParameters](docs/BaseProvisionVDBParameters.md)
  - [Bookmark](docs/Bookmark.md)
  - [CreateBookmarkResponse](docs/CreateBookmarkResponse.md)
+ - [CreateEnvironmentResponse](docs/CreateEnvironmentResponse.md)
+ - [CreateVDBGroupRequest](docs/CreateVDBGroupRequest.md)
+ - [CreateVDBGroupResponse](docs/CreateVDBGroupResponse.md)
  - [DSource](docs/DSource.md)
  - [DataPointBySnapshotParameters](docs/DataPointBySnapshotParameters.md)
  - [DataPointByTimestampParameters](docs/DataPointByTimestampParameters.md)
+ - [DeleteEngineResponse](docs/DeleteEngineResponse.md)
+ - [DeleteEnvironmentResponse](docs/DeleteEnvironmentResponse.md)
  - [DeleteVDBParameters](docs/DeleteVDBParameters.md)
  - [DeleteVDBResponse](docs/DeleteVDBResponse.md)
+ - [DisableEnvironmentResponse](docs/DisableEnvironmentResponse.md)
  - [DisableVDBParameters](docs/DisableVDBParameters.md)
  - [DisableVDBResponse](docs/DisableVDBResponse.md)
+ - [EnableEnvironmentResponse](docs/EnableEnvironmentResponse.md)
  - [EnableVDBParameters](docs/EnableVDBParameters.md)
  - [EnableVDBResponse](docs/EnableVDBResponse.md)
  - [Engine](docs/Engine.md)
+ - [EngineConnectivityCheckRequest](docs/EngineConnectivityCheckRequest.md)
+ - [EngineConnectivityCheckResponse](docs/EngineConnectivityCheckResponse.md)
  - [EngineRegistrationParameter](docs/EngineRegistrationParameter.md)
- - [EngineUserMapping](docs/EngineUserMapping.md)
  - [Environment](docs/Environment.md)
+ - [EnvironmentCreateParameters](docs/EnvironmentCreateParameters.md)
  - [Error](docs/Error.md)
  - [HashicorpVault](docs/HashicorpVault.md)
  - [Hook](docs/Hook.md)
  - [Host](docs/Host.md)
  - [Job](docs/Job.md)
- - [JobId](docs/JobId.md)
+ - [ListBookmarksByVDBGroupsResponse](docs/ListBookmarksByVDBGroupsResponse.md)
  - [ListBookmarksResponse](docs/ListBookmarksResponse.md)
  - [ListDSourcesResponse](docs/ListDSourcesResponse.md)
- - [ListEnginesResponse](docs/ListEnginesResponse.md)
  - [ListEnvironmentsResponse](docs/ListEnvironmentsResponse.md)
  - [ListSnaphotsResponse](docs/ListSnaphotsResponse.md)
  - [ListSourcesResponse](docs/ListSourcesResponse.md)
+ - [ListVDBGroupsByBookmarkResponse](docs/ListVDBGroupsByBookmarkResponse.md)
+ - [ListVDBGroupsResponse](docs/ListVDBGroupsResponse.md)
  - [ListVDBsResponse](docs/ListVDBsResponse.md)
  - [PaginatedResponseMetadata](docs/PaginatedResponseMetadata.md)
  - [ProvisionVDBBySnapshotParameters](docs/ProvisionVDBBySnapshotParameters.md)
  - [ProvisionVDBByTimestampParameters](docs/ProvisionVDBByTimestampParameters.md)
  - [ProvisionVDBByTimestampParametersAllOf](docs/ProvisionVDBByTimestampParametersAllOf.md)
  - [ProvisionVDBResponse](docs/ProvisionVDBResponse.md)
+ - [RefreshEnvironmentResponse](docs/RefreshEnvironmentResponse.md)
  - [RefreshVDBBySnapshotParameters](docs/RefreshVDBBySnapshotParameters.md)
  - [RefreshVDBBySnapshotResponse](docs/RefreshVDBBySnapshotResponse.md)
  - [RefreshVDBByTimestampParameters](docs/RefreshVDBByTimestampParameters.md)
  - [RefreshVDBByTimestampResponse](docs/RefreshVDBByTimestampResponse.md)
  - [RegisteredEngine](docs/RegisteredEngine.md)
- - [RegisteredEngineUser](docs/RegisteredEngineUser.md)
- - [RestoreBookmarkResponse](docs/RestoreBookmarkResponse.md)
  - [RollbackVDBBySnapshotParameters](docs/RollbackVDBBySnapshotParameters.md)
  - [RollbackVDBBySnapshotResponse](docs/RollbackVDBBySnapshotResponse.md)
  - [RollbackVDBByTimestampParameters](docs/RollbackVDBByTimestampParameters.md)
@@ -181,7 +201,12 @@ Class | Method | HTTP request | Description
  - [Source](docs/Source.md)
  - [StartVDBResponse](docs/StartVDBResponse.md)
  - [StopVDBResponse](docs/StopVDBResponse.md)
+ - [Tag](docs/Tag.md)
+ - [TagsRequest](docs/TagsRequest.md)
+ - [TagsResponse](docs/TagsResponse.md)
+ - [UpdateVDBParameters](docs/UpdateVDBParameters.md)
  - [VDB](docs/VDB.md)
+ - [VDBGroup](docs/VDBGroup.md)
 
 
 ## Documentation For Authorization
