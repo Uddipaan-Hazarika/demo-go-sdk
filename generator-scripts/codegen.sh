@@ -28,7 +28,7 @@ fi
 [[ ! -d "/tmp" ]] && mktemp
 
 java -jar openapi-generator-cli.jar generate \
-    -i $1 -g go -o tmp/ || die "failed to generate code"
+    -i $1 -g go -o tmp/ --package-name delphix_dct_api|| die "failed to generate code"
 
 script_base_dir=$(dirname $0)
 
@@ -50,7 +50,7 @@ pushd $script_base_dir/../
 rm -rf go.mod || die "failed to remove existing go.mod"
 
 # initializing the module with 'github.com/delphix/dct-sdk-go'
-go mod init github.com/Uddipaan-Hazarika/demo-go-sdk && go mod tidy \
+go mod init github.com/delphix/dct-sdk-go && go mod tidy \
     || die "module initialization failed"
 
 popd

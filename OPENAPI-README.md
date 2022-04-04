@@ -1,4 +1,4 @@
-# Go API client for openapi
+# Go API client for delphix_dct_api
 
 Delphix API Gateway API
 
@@ -23,7 +23,7 @@ go get golang.org/x/net/context
 Put the package under your project folder and add the following in import:
 
 ```golang
-import openapi "github.com/GIT_USER_ID/GIT_REPO_ID"
+import delphix_dct_api "github.com/GIT_USER_ID/GIT_REPO_ID"
 ```
 
 To use a proxy, set the environment variable `HTTP_PROXY`:
@@ -41,7 +41,7 @@ Default configuration comes with `Servers` field that contains server objects as
 For using other server than the one defined on index 0 set context value `sw.ContextServerIndex` of type `int`.
 
 ```golang
-ctx := context.WithValue(context.Background(), openapi.ContextServerIndex, 1)
+ctx := context.WithValue(context.Background(), delphix_dct_api.ContextServerIndex, 1)
 ```
 
 ### Templated Server URL
@@ -49,7 +49,7 @@ ctx := context.WithValue(context.Background(), openapi.ContextServerIndex, 1)
 Templated server URL is formatted using default variables from configuration or from context value `sw.ContextServerVariables` of type `map[string]string`.
 
 ```golang
-ctx := context.WithValue(context.Background(), openapi.ContextServerVariables, map[string]string{
+ctx := context.WithValue(context.Background(), delphix_dct_api.ContextServerVariables, map[string]string{
 	"basePath": "v2",
 })
 ```
@@ -63,10 +63,10 @@ An operation is uniquely identified by `"{classname}Service.{nickname}"` string.
 Similar rules for overriding default operation server index and variables applies by using `sw.ContextOperationServerIndices` and `sw.ContextOperationServerVariables` context maps.
 
 ```
-ctx := context.WithValue(context.Background(), openapi.ContextOperationServerIndices, map[string]int{
+ctx := context.WithValue(context.Background(), delphix_dct_api.ContextOperationServerIndices, map[string]int{
 	"{classname}Service.{nickname}": 2,
 })
-ctx = context.WithValue(context.Background(), openapi.ContextOperationServerVariables, map[string]map[string]string{
+ctx = context.WithValue(context.Background(), delphix_dct_api.ContextOperationServerVariables, map[string]map[string]string{
 	"{classname}Service.{nickname}": {
 		"port": "8443",
 	},
@@ -89,16 +89,22 @@ Class | Method | HTTP request | Description
 *BookmarksApi* | [**GetBookmarkById**](docs/BookmarksApi.md#getbookmarkbyid) | **Get** /bookmarks/{bookmarkId} | Get a bookmark by ID.
 *BookmarksApi* | [**GetBookmarks**](docs/BookmarksApi.md#getbookmarks) | **Get** /bookmarks | List all bookmarks.
 *BookmarksApi* | [**GetVdbGroupsByBookmark**](docs/BookmarksApi.md#getvdbgroupsbybookmark) | **Get** /bookmarks/{bookmarkId}/vdb-groups | List VDB Groups compatible with this bookmark.
+*DSourcesApi* | [**CreateTagsDsource**](docs/DSourcesApi.md#createtagsdsource) | **Post** /dsources/{dsourceId}/tags | Create tags for a dSource.
 *DSourcesApi* | [**GetDsourceById**](docs/DSourcesApi.md#getdsourcebyid) | **Get** /dsources/{dsourceId} | Get a dSource by ID.
 *DSourcesApi* | [**GetDsources**](docs/DSourcesApi.md#getdsources) | **Get** /dsources | List all dSources.
-*EnginesApi* | [**ConnectivityCheck**](docs/EnginesApi.md#connectivitycheck) | **Post** /engines/connnectivity/check | Checks connectivity between an engine and a remote host on a given port.
-*EnvironmentsApi* | [**CreateEnvironments**](docs/EnvironmentsApi.md#createenvironments) | **Post** /environments | Create a environment.
+*DSourcesApi* | [**GetTagsDsource**](docs/DSourcesApi.md#gettagsdsource) | **Get** /dsources/{dsourceId}/tags | Get tags for a dSource.
+*EnginesApi* | [**ConnectivityCheck**](docs/EnginesApi.md#connectivitycheck) | **Post** /engines/connectivity/check | Checks connectivity between an engine and a remote host on a given port.
+*EnvironmentsApi* | [**CreateEnvironmentTags**](docs/EnvironmentsApi.md#createenvironmenttags) | **Post** /environments/{environmentId}/tags | Create tags for an Environment.
+*EnvironmentsApi* | [**CreateEnvironments**](docs/EnvironmentsApi.md#createenvironments) | **Post** /environments | Create an environment.
 *EnvironmentsApi* | [**DeleteEnvironment**](docs/EnvironmentsApi.md#deleteenvironment) | **Delete** /environments/{environmentId} | Delete an environment by ID.
 *EnvironmentsApi* | [**DisableEnvironment**](docs/EnvironmentsApi.md#disableenvironment) | **Put** /environments/{environmentId}/disable | Disable environment.
 *EnvironmentsApi* | [**EnableEnvironment**](docs/EnvironmentsApi.md#enableenvironment) | **Put** /environments/{environmentId}/enable | Enable a disabled environment.
 *EnvironmentsApi* | [**GetEnvironmentById**](docs/EnvironmentsApi.md#getenvironmentbyid) | **Get** /environments/{environmentId} | Returns an environment by ID.
 *EnvironmentsApi* | [**GetEnvironments**](docs/EnvironmentsApi.md#getenvironments) | **Get** /environments | List all environments.
+*EnvironmentsApi* | [**GetTagsEnvironment**](docs/EnvironmentsApi.md#gettagsenvironment) | **Get** /environments/{environmentId}/tags | Get tags for an Environment.
+*EnvironmentsApi* | [**ListEnvironmentUsers**](docs/EnvironmentsApi.md#listenvironmentusers) | **Get** /environments/{environmentId}/users | List environment users.
 *EnvironmentsApi* | [**RefreshEnvironment**](docs/EnvironmentsApi.md#refreshenvironment) | **Put** /environments/{environmentId}/refresh | Refresh environment.
+*EnvironmentsApi* | [**UpdateEnvironment**](docs/EnvironmentsApi.md#updateenvironment) | **Put** /environments/{environmentId} | Update an environment by ID.
 *JobsApi* | [**AbandonJob**](docs/JobsApi.md#abandonjob) | **Post** /jobs/{jobId}/abandon | Abandons a job.
 *JobsApi* | [**GetJobById**](docs/JobsApi.md#getjobbyid) | **Get** /jobs/{jobId} | Returns a job by ID.
 *ManagementApi* | [**CreateHashicorpVault**](docs/ManagementApi.md#createhashicorpvault) | **Post** /management/vaults/hashicorp | Configure a new Hashicorp Vault
@@ -110,6 +116,7 @@ Class | Method | HTTP request | Description
 *ManagementApi* | [**RegisterEngine**](docs/ManagementApi.md#registerengine) | **Post** /management/engines | Register an engine.
 *ManagementApi* | [**UnregisterEngine**](docs/ManagementApi.md#unregisterengine) | **Delete** /management/engines/{engineId} | Unregister an engine.
 *ManagementApi* | [**UpdateRegisteredEngine**](docs/ManagementApi.md#updateregisteredengine) | **Put** /management/engines/{engineId} | Update a registered engine.
+*ReportingApi* | [**GetVirtualizationStorageSummaryReport**](docs/ReportingApi.md#getvirtualizationstoragesummaryreport) | **Get** /reporting/virtualization-storage-summary-report | Gets the storage summary report for virtualization engines.
 *SnapshotsApi* | [**GetSnapshotById**](docs/SnapshotsApi.md#getsnapshotbyid) | **Get** /snapshots/{snapshotId} | Get a Snapshot by ID.
 *SnapshotsApi* | [**GetSnapshots**](docs/SnapshotsApi.md#getsnapshots) | **Get** /snapshots | List Snapshots for a dSource or VDB.
 *SourcesApi* | [**GetSourceById**](docs/SourcesApi.md#getsourcebyid) | **Get** /sources/{sourceId} | Get a source by ID.
@@ -119,6 +126,8 @@ Class | Method | HTTP request | Description
 *VDBGroupsApi* | [**GetBookmarksByVdbGroup**](docs/VDBGroupsApi.md#getbookmarksbyvdbgroup) | **Get** /vdb-groups/{vdbGroupId}/bookmarks | List bookmarks compatible with this VDB Group.
 *VDBGroupsApi* | [**GetVdbGroup**](docs/VDBGroupsApi.md#getvdbgroup) | **Get** /vdb-groups/{vdbGroupId} | Get a VDBGroup by name.
 *VDBGroupsApi* | [**GetVdbGroups**](docs/VDBGroupsApi.md#getvdbgroups) | **Get** /vdb-groups | List all VDBGroups.
+*VDBGroupsApi* | [**RefreshVdbGroup**](docs/VDBGroupsApi.md#refreshvdbgroup) | **Post** /vdb-groups/{vdbGroupId}/refresh | Refresh a VDBGroup.
+*VDBGroupsApi* | [**RollbackVdbGroup**](docs/VDBGroupsApi.md#rollbackvdbgroup) | **Post** /vdb-groups/{vdbGroupId}/rollback | Rollback a VDBGroup.
 *VDBsApi* | [**CreateVdbTags**](docs/VDBsApi.md#createvdbtags) | **Post** /vdbs/{vdbId}/tags | Create tags for a VDB.
 *VDBsApi* | [**DeleteVdb**](docs/VDBsApi.md#deletevdb) | **Post** /vdbs/{vdbId}/delete | Delete a VDB.
 *VDBsApi* | [**DeleteVdbTags**](docs/VDBsApi.md#deletevdbtags) | **Post** /vdbs/{vdbId}/tags/delete | Delete tags for a VDB.
@@ -133,6 +142,7 @@ Class | Method | HTTP request | Description
 *VDBsApi* | [**RefreshVdbByTimestamp**](docs/VDBsApi.md#refreshvdbbytimestamp) | **Post** /vdbs/{vdbId}/refresh_by_timestamp | Refresh a VDB by timestamp.
 *VDBsApi* | [**RollbackVdbBySnapshot**](docs/VDBsApi.md#rollbackvdbbysnapshot) | **Post** /vdbs/{vdbId}/rollback_by_snapshot | Rollback a VDB by snapshot.
 *VDBsApi* | [**RollbackVdbByTimestamp**](docs/VDBsApi.md#rollbackvdbbytimestamp) | **Post** /vdbs/{vdbId}/rollback_by_timestamp | Rollback a VDB by timestamp.
+*VDBsApi* | [**SearchVdbs**](docs/VDBsApi.md#searchvdbs) | **Post** /vdbs/search | Search for VDBs.
 *VDBsApi* | [**StartVdb**](docs/VDBsApi.md#startvdb) | **Post** /vdbs/{vdbId}/start | Start a VDB.
 *VDBsApi* | [**StopVdb**](docs/VDBsApi.md#stopvdb) | **Post** /vdbs/{vdbId}/stop | Stop a VDB.
 *VDBsApi* | [**UpdateVdbById**](docs/VDBsApi.md#updatevdbbyid) | **Patch** /vdbs/{vdbId} | Update values of a VDB
@@ -154,6 +164,7 @@ Class | Method | HTTP request | Description
  - [DataPointByTimestampParameters](docs/DataPointByTimestampParameters.md)
  - [DeleteEngineResponse](docs/DeleteEngineResponse.md)
  - [DeleteEnvironmentResponse](docs/DeleteEnvironmentResponse.md)
+ - [DeleteTag](docs/DeleteTag.md)
  - [DeleteVDBParameters](docs/DeleteVDBParameters.md)
  - [DeleteVDBResponse](docs/DeleteVDBResponse.md)
  - [DisableEnvironmentResponse](docs/DisableEnvironmentResponse.md)
@@ -168,6 +179,8 @@ Class | Method | HTTP request | Description
  - [EngineRegistrationParameter](docs/EngineRegistrationParameter.md)
  - [Environment](docs/Environment.md)
  - [EnvironmentCreateParameters](docs/EnvironmentCreateParameters.md)
+ - [EnvironmentUpdateParameters](docs/EnvironmentUpdateParameters.md)
+ - [EnvironmentUser](docs/EnvironmentUser.md)
  - [Error](docs/Error.md)
  - [HashicorpVault](docs/HashicorpVault.md)
  - [Hook](docs/Hook.md)
@@ -176,6 +189,7 @@ Class | Method | HTTP request | Description
  - [ListBookmarksByVDBGroupsResponse](docs/ListBookmarksByVDBGroupsResponse.md)
  - [ListBookmarksResponse](docs/ListBookmarksResponse.md)
  - [ListDSourcesResponse](docs/ListDSourcesResponse.md)
+ - [ListEnvironmentUsers](docs/ListEnvironmentUsers.md)
  - [ListEnvironmentsResponse](docs/ListEnvironmentsResponse.md)
  - [ListSnaphotsResponse](docs/ListSnaphotsResponse.md)
  - [ListSourcesResponse](docs/ListSourcesResponse.md)
@@ -191,12 +205,19 @@ Class | Method | HTTP request | Description
  - [RefreshVDBBySnapshotParameters](docs/RefreshVDBBySnapshotParameters.md)
  - [RefreshVDBBySnapshotResponse](docs/RefreshVDBBySnapshotResponse.md)
  - [RefreshVDBByTimestampParameters](docs/RefreshVDBByTimestampParameters.md)
+ - [RefreshVDBByTimestampParametersAllOf](docs/RefreshVDBByTimestampParametersAllOf.md)
  - [RefreshVDBByTimestampResponse](docs/RefreshVDBByTimestampResponse.md)
+ - [RefreshVDBGroupParameters](docs/RefreshVDBGroupParameters.md)
+ - [RefreshVDBGroupResponse](docs/RefreshVDBGroupResponse.md)
  - [RegisteredEngine](docs/RegisteredEngine.md)
  - [RollbackVDBBySnapshotParameters](docs/RollbackVDBBySnapshotParameters.md)
  - [RollbackVDBBySnapshotResponse](docs/RollbackVDBBySnapshotResponse.md)
  - [RollbackVDBByTimestampParameters](docs/RollbackVDBByTimestampParameters.md)
  - [RollbackVDBByTimestampResponse](docs/RollbackVDBByTimestampResponse.md)
+ - [RollbackVDBGroupParameters](docs/RollbackVDBGroupParameters.md)
+ - [RollbackVDBGroupResponse](docs/RollbackVDBGroupResponse.md)
+ - [SearchBody](docs/SearchBody.md)
+ - [SearchVDBsResponse](docs/SearchVDBsResponse.md)
  - [Snapshot](docs/Snapshot.md)
  - [Source](docs/Source.md)
  - [StartVDBResponse](docs/StartVDBResponse.md)
@@ -204,9 +225,12 @@ Class | Method | HTTP request | Description
  - [Tag](docs/Tag.md)
  - [TagsRequest](docs/TagsRequest.md)
  - [TagsResponse](docs/TagsResponse.md)
+ - [UpdateEnvironmentResponse](docs/UpdateEnvironmentResponse.md)
  - [UpdateVDBParameters](docs/UpdateVDBParameters.md)
  - [VDB](docs/VDB.md)
  - [VDBGroup](docs/VDBGroup.md)
+ - [VirtualizationStorageSummaryData](docs/VirtualizationStorageSummaryData.md)
+ - [VirtualizationStorageSummaryReportResponse](docs/VirtualizationStorageSummaryReportResponse.md)
 
 
 ## Documentation For Authorization

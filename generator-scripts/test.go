@@ -35,21 +35,16 @@ func main() {
 	cfg.HTTPClient = &http.Client{Transport: &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	}}
-
 	client := openapi.NewAPIClient(cfg)
-
 	req := client.ManagementApi.GetRegisteredEngines(ctx)
-
-	res, _, err := client.ManagementApi.GetRegisteredEnginesExecute(req)
-
+	engines, _, err := client.ManagementApi.GetRegisteredEnginesExecute(req)
 	if err != nil {
-		fmt.Print("\n__________ERR__________\n")
+		fmt.Print("Error while retrieving Delphix Engines.")
 		fmt.Print(err)
 		os.Exit(1)
 	}
-	fmt.Printf("List of engines are: \n")
-
-	for _, j := range res {
-		fmt.Printf("%s \n", j.GetHostname())
+	fmt.Printf("Retrieved list of Delphix Engines: \n")
+	for _, engine := range engines {
+		fmt.Printf("%s \n", engine.Hostname)
 	}
 }
